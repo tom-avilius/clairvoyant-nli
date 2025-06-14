@@ -9,7 +9,35 @@ url = "http://localhost:7000/scrape"
 
 
 def nli_pipeline(query):
+    """
+    Evaluates the credibility of a news headline using a hybrid NLI
+    (Natural Language Inference) and semantic similarity approach.
 
+    Steps performed:
+    1. Converts the input query to lowercase for normalization.
+    2. Sends the query to a scraping service to retrieve relevant
+    headlines/articles.
+    3. Uses a pre-trained NLI model to classify each comparison as
+    entailment, contradiction, or neutral.
+    4. For neutral results, applies cosine similarity to refine
+    classification.
+    5. Computes a final credibility score based on the distribution of
+    classification labels.
+
+    Args:
+        query (str): The input news headline.
+
+    Returns:
+        float: A credibility score.
+               - A positive score suggests support from scraped results.
+               - A negative score suggests contradiction.
+               - A score near zero indicates uncertainty or low correlation.
+
+    Note:
+        This function assumes that external request errors (e.g., network
+        failure) will be handled upstream
+        or allowed to raise unhandled exceptions naturally.
+    """
     query = query.lower()  # Normalize the headline to lowercase
 
     # Optional: use text cleaning like lemmatization if needed

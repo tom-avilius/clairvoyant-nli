@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.post("/analyze")
 def analyze_news(news: str):
-    score, counts = run_inference(news.headline, news.flag)
+    score = nli_pipeline(news)
     return {
         "score": score,
         "label_counts": counts,
