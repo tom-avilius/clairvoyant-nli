@@ -28,7 +28,8 @@ def lemmatize_text(text):
 
     cleaned = []
     for token in doc:
-        # Skip stop words, punctuation, and symbols explicitly in string.punctuation
+        # Skip stop words, punctuation, and symbols explicitly in
+        # string.punctuation
         if token.is_stop or token.is_punct or token.text in string.punctuation:
             continue
         # Append the lemmatized form of the token

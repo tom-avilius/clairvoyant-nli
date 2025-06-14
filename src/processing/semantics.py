@@ -1,7 +1,8 @@
 from sentence_transformers import SentenceTransformer, util
 
 # Load sentence embedding models
-# "all-MiniLM-L6-v2" is a fast and lightweight model suitable for semantic similarity tasks
+# "all-MiniLM-L6-v2" is a fast and lightweight model suitable for semantic
+# similarity tasks
 minilm = SentenceTransformer("all-MiniLM-L6-v2")
 
 # "all-mpnet-base-v2" is a larger, more accurate model for semantic similarity
@@ -19,7 +20,8 @@ def cosine_similarity_mpnet(text1: str, text2: str) -> float:
 
     Returns:
         float: Cosine similarity score between the two texts.
-               Ranges from -1.0 to 1.0 (usually between 0.0 to 1.0 for valid inputs).
+               Ranges from -1.0 to 1.0 (usually between 0.0 to 1.0
+               for valid inputs).
     """
 
     embeddings = mpnet.encode([text1, text2], convert_to_tensor=True)
@@ -31,7 +33,8 @@ def cosine_similarity_minilm(text1: str, text2: str) -> float:
     """
     Compute cosine similarity between two texts using PyTorch backend.
 
-    This function uses the same MiniLM model but demonstrates a slightly different API call.
+    This function uses the same MiniLM model but demonstrates a slightly
+    different API call.
     Note: It returns similar results as `com_sim`.
 
     Args:
