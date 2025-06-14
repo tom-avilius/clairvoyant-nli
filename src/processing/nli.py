@@ -6,7 +6,7 @@ from transformers import pipeline
 classifier = pipeline("text-classification", model="facebook/bart-large-mnli")
 
 
-def compare(text1: str, text2: str) -> list:
+def classify(text1: str, text2: str) -> list:
     """
     Compares two input texts using a Natural Language Inference (NLI) model.
 
