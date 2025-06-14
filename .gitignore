@@ -38,7 +38,6 @@ huggingface/
 *.jsonl
 *.xlsx
 *.db
-data/
 datasets/
 results/
 
