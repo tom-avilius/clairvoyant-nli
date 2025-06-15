@@ -1,7 +1,8 @@
 import requests
 from processing.nli import classify
-from processing.semantics import cosine_similarity_minilm
+from processing.semantics import cosine_similarity_mpnet
 from processing.score import compute_score
+from processing.sentiment import analyze_sentiment
 
 
 # URL of the local scraper service
@@ -61,13 +62,19 @@ def nli_pipeline(query):
         # Compare the query and scraped text using NLI model
         res = classify(query, d_lower)
 
-        # If prediction is neutral, fall back to cosine similarity
+        # If prediction is neutral, perform futher pipelining
         if res[0]["label"] == "neutral":
-            sim = cosine_similarity_minilm(query, d_lower)
-            if sim > 0.74:
-                res[0]["label"] = "entailment"
-            else:
+            # analyze sentiment for both texts
+            res[0]["label"] = analyze_sentiment(query, d_lower)
+            # find cosine similarity
+            similarity = cosine_similarity_mpnet(query, d_lower)
+
+            # control entailments with low semantic threshold
+            if res[0]["label"] == "entailment" and similarity < 0.5:
                 res[0]["label"] = "contradiction"
+            # control contradictions with high semantic threshold
+            elif res[0]["label"] == "contradiction" and similarity > 0.75:
+                res[0]["label"] = "entailment"
 
         # Accumulate all results
         allResults.extend(res)
