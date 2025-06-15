@@ -1,7 +1,8 @@
 from fastapi import FastAPI  # FastAPI is used to create the web API
 # Pydantic is used for request validation and parsing
 from pydantic import BaseModel
-from pipeline import nli_pipeline  # Import the custom NLI pipeline function
+# Import the custom NLI pipeline function
+from pipeline.nli_pipeline import nli_pipeline
 
 # Create a FastAPI instance
 app = FastAPI()
