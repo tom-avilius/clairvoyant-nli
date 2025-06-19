@@ -43,12 +43,7 @@ def compute_score(results):
         score = sum(r["score"] for r in results) / total if total != 0 else 0.0
         return score, counts
 
-    # Case: Avoid division by zero just in case
-    if total == 0:
-        return 0.0, counts
-
     # Main scoring formula: accounts for support vs contradiction, scaled
     # by uncertainty
     score = (entailments - contradictions) / total
-    score *= neutrals  # Weight the score by neutral count
     return score, counts
