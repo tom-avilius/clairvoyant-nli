@@ -59,7 +59,7 @@ def nli_pipeline(query):
 
     # Process each of the returned headlines/articles
     for d in data:
-        d_lower = d.lower()
+        d_lower = d["headline"].lower()
 
         # Compare the query and scraped text using NLI model
         res = classify(query, d_lower)
