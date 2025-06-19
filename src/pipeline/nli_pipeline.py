@@ -55,6 +55,8 @@ def nli_pipeline(query):
 
     allResults = []
 
+    data = data[5:]
+
     # Process each of the returned headlines/articles
     for d in data:
         d_lower = d.lower()
