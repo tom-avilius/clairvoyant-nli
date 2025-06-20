@@ -1,8 +1,10 @@
 import requests
+import uuid
 from processing.nli import classify
 from processing.semantics import cosine_similarity_mpnet
 from processing.score import compute_score
 from processing.sentiment import analyze_sentiment
+from storage.results import sources
 
 
 # URL of the local scraper service
@@ -39,6 +41,8 @@ def nli_pipeline(query):
         failure) will be handled upstream
         or allowed to raise unhandled exceptions naturally.
     """
+    # Generate a result ID
+    resultId = str(uuid.uuid4())
     query = query.lower()  # Normalize the headline to lowercase
 
     # Optional: use text cleaning like lemmatization if needed
@@ -54,6 +58,8 @@ def nli_pipeline(query):
     data = response.json().get("result", [])
 
     allResults = []
+    # compilation of computations
+    compilation = []
 
     data = data[5:]
 
@@ -80,7 +86,16 @@ def nli_pipeline(query):
 
         # Accumulate all results
         allResults.extend(res)
+        compilation.append(
+            {
+                "source": d.get("source"),
+                "headline": d.get("headline"),
+                "label": res[0]["label"],
+            }
+        )
 
     # Compute the fake news score based on the label distribution
     score, counts = compute_score(allResults)
-    return score
+    # store the result of the computation
+    sources[resultId] = compilation
+    return score, resultId

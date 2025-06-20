@@ -38,9 +38,7 @@ def analyze_news(request: NewsRequest):
                          strong evidence.
     """
     # Call the NLI pipeline to get the score for the input news
-    score = nli_pipeline(request.news)
+    score, uuid = nli_pipeline(request.news)
 
     # Return the result in JSON format
-    return {
-        "score": score,
-    }
+    return {"score": score, "uuid": uuid}
