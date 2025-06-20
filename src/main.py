@@ -42,3 +42,7 @@ def analyze_news(request: NewsRequest):
 
     # Return the result in JSON format
     return {"score": score, "uuid": uuid}
+
+
+@app.get("/sources")
+def send_sources(uuid: str):
