@@ -48,4 +48,5 @@ def analyze_news(request: NewsRequest):
 @app.get("/sources")
 def send_sources(uuid: str):
     source = filter_source(uuid)
+    print(source)
     return source
