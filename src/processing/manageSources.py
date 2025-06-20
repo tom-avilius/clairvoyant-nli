@@ -10,7 +10,7 @@ def filter_sources(uuid: str):
 
         if label == "entailment":
             for source in trustedSources:
-                if result.get("source").startswith(source):
+                if result.get("source") and result.get("source").startswith(source):
                     return result
 
 
