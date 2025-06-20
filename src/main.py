@@ -47,6 +47,15 @@ def analyze_news(request: NewsRequest):
 
 @app.get("/sources")
 def send_sources(uuid: str):
+    """
+    params
+    uuid: str
+    The unique id sent to the client with the response
+    of analyze request.
+
+    Sends the filtered query response that contains
+    entailment and flags as either trustworthy or otherwise.
+    """
     source = filter_source(uuid)
     print(source)
     return source
