@@ -3,6 +3,7 @@ from fastapi import FastAPI  # FastAPI is used to create the web API
 from pydantic import BaseModel
 # Import the custom NLI pipeline function
 from pipeline.nli_pipeline import nli_pipeline
+from pipeline.sources_pipeline import filter_source
 
 # Create a FastAPI instance
 app = FastAPI()
@@ -46,3 +47,5 @@ def analyze_news(request: NewsRequest):
 
 @app.get("/sources")
 def send_sources(uuid: str):
+    source = filter_source(uuid)
+    return source
