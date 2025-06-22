@@ -1,5 +1,6 @@
 import requests
 import uuid
+import string
 from processing.nli import classify
 from processing.semantics import cosine_similarity_mpnet
 from processing.score import compute_score
@@ -44,6 +45,7 @@ def nli_pipeline(query):
     # Generate a result ID
     resultId = str(uuid.uuid4())
     query = query.lower()  # Normalize the headline to lowercase
+    query = query.translate(str.maketrans("", "", string.punctuation))
 
     # Optional: use text cleaning like lemmatization if needed
     # WARN: Kinda results in anomalies
@@ -61,11 +63,13 @@ def nli_pipeline(query):
     # compilation of computations
     compilation = []
 
-    data = data[5:]
-
     # Process each of the returned headlines/articles
     for d in data:
-        d_lower = d["headline"].lower()
+        d_lower = d.get("headline")
+        if d_lower is not None:
+            d_lower = d_lower.lower()
+        else:
+            continue
 
         # Compare the query and scraped text using NLI model
         res = classify(query, d_lower)
