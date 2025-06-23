@@ -44,7 +44,7 @@ python -m spacy download en_core_web_sm
 Start your scraping service ([Clairvoyant-Scraper](https://github.com/tom-avilius/clairvoyant-scraper)), then launch the API server:
 
 ```bash
-uvicorn main:app --reload
+fastapi dev src/main.py
 ```
 
 You can test the API with `curl`:
